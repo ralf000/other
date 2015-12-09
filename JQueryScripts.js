@@ -96,3 +96,32 @@ $(function () {
         i++;
     });
 });
+
+//for techparkareas
+$(function () {
+    var arr = [
+        {
+            name: 'Технопарк «Визбас»',
+            url: 'http://inmoscow.org/tehnopark.html?id=56388a0b4c105cb7c5dbf0e5'
+        },
+        {
+            name: 'Технопарк «Итэлма»',
+            url: 'http://inmoscow.org/tehnopark.html?id=56388a484c105cb7c5dbf136'
+        },
+        {
+            name: 'Технопарк «ТехноСпарк»',
+            url: 'http://inmoscow.org/tehnopark.html?id=56388a0d4c105cb7c5dbf0e6'
+        },
+        {
+            name: 'Технопарк «ФГБНУ Тиснум»',
+            url: 'http://inmoscow.org/tehnopark.html?id=56388a494c105cb7c5dbf137'
+        }
+    ];
+    var list = $('#content .row .col-md-3');
+    function techparkCreator(obj) {
+        return '<div class="dec4-menu-item"><div class="cell"><a href="'+obj.url+'">'+obj.name+'</a></div></div>';
+    }
+    for (var i = 0, max = arr.length; i < max; i++) {
+        list.append(techparkCreator(arr[i]));
+    }
+});
