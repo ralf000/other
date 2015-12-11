@@ -119,9 +119,23 @@ $(function () {
     ];
     var list = $('#content .row .col-md-3');
     function techparkCreator(obj) {
-        return '<div class="dec4-menu-item"><div class="cell"><a href="'+obj.url+'">'+obj.name+'</a></div></div>';
+        return '<div class="dec4-menu-item"><div class="cell"><a target="blank" href="' + obj.url + '">' + obj.name + '</a></div></div>';
     }
     for (var i = 0, max = arr.length; i < max; i++) {
         list.append(techparkCreator(arr[i]));
     }
 });
+
+/* 
+ *  for search russian text on page
+ * @return array words and phrases on russian
+ */
+function wordsFinder() {
+    var doc = $('body');
+    var fetch = $.unique(doc.html().match(/[а-яА-Я]+[\sа-яА-Я]*/gim));
+    return $(fetch).map(function (idx, item) {
+        return item.replace(/\n/g, '').replace(/\s{2,}/g, ' ').trim();
+    });
+}
+
+console.log(wordsFinder());
