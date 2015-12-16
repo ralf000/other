@@ -126,6 +126,23 @@ $(function () {
     }
 });
 
+/*---------------------------------------------------------------------------------------*/
+/*
+ * RegEx Selector для jQuery
+ * @returns {Boolean}
+ */
+$.expr[':'].regex = function (elem, index, match) {
+    var matchParams = match[3].split(','),
+            validLabels = /^(data|css):/,
+            attr = {
+                method: matchParams[0].match(validLabels) ?
+                        matchParams[0].split(':')[0] : 'attr',
+                property: matchParams.shift().replace(validLabels, '')
+            },
+    regexFlags = 'ig',
+            regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g, ''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+};
 /* 
  *  for search russian text on page
  * @return array words and phrases on russian
@@ -134,8 +151,11 @@ function wordsFinder() {
     var doc = $('body');
     var fetch = $.unique(doc.html().match(/[а-яА-Я]+[\sа-яА-Я]*/gim));
     return $(fetch).map(function (idx, item) {
+        if ($('a:regex(src,' + item + ')').length > 0 || $('a:regex(href,' + item + ')').length > 0)
+            return;
         return item.replace(/\n/g, '').replace(/\s{2,}/g, ' ').trim();
     });
 }
 
 console.log(wordsFinder());
+/*---------------------------------------------------------------------------------------*/
